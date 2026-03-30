@@ -1,0 +1,8 @@
+[build]
+  command = "npm run set-envs ; npm run build"
+  publish = "dist/country-app/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
