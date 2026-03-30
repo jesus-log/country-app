@@ -1,6 +1,6 @@
 import { Component, ElementRef, input, signal, viewChild, inject } from '@angular/core';
 import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
-import { environment } from '@env/environment.development';
+import { environment } from '@env/environment';
 import { ActivatedRoute } from '@angular/router';
 
 mapboxgl.accessToken = environment.mapboxKey;
