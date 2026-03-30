@@ -1,0 +1,117 @@
+<section>
+  <div class="md:hidden mt-2 space-y-3">
+    @if (isLoading()) {
+    <div class="card bg-base-200">
+      <div class="card-body items-center justify-center h-40">
+        <span class="loading loading-spinner loading-xl text-orange-800"></span>
+      </div>
+    </div>
+    }
+
+    @if (errorMessage()) {
+    <div class="card bg-base-200">
+      <div class="card-body text-center">
+        {{errorMessage()}}
+      </div>
+    </div>
+    }
+
+    @if (countries().length == 0 && !isLoading()) {
+    <div class="card bg-base-200">
+      <div class="card-body text-center">
+        No se encontraron resultados
+      </div>
+    </div>
+    }
+
+    @for (country of countries(); track country.cca2; let index = $index) {
+    <article class="card bg-base-200 shadow-sm">
+      <div class="card-body p-4">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold">#{{index + 1}}</span>
+          <span class="text-2xl">{{country.flag}}</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <img class="w-12" [src]="country.flagSvg" [alt]="country.name">
+          <div>
+            <h3 class="font-semibold">{{country.name}}</h3>
+            <p class="text-sm opacity-80">Capital: {{country.capital}}</p>
+          </div>
+        </div>
+
+        <div>
+          <span class="badge badge-secondary bg-orange-900">
+            {{country.population | number}}
+          </span>
+        </div>
+
+        <a [routerLink]="['/country/by', country.cca2]" class="link-primary text-orange-800">
+          Mas informacion
+        </a>
+      </div>
+    </article>
+    }
+  </div>
+  <div class="hidden md:block">
+     <table class="table table-md mt-2 w-full md:table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Icono</th>
+        <th>Bandera</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Poblacion</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (country of countries(); track country.cca2; let index = $index) {
+      <tr>
+        <td>{{index + 1}}</td>
+        <td>{{country.flag}}</td>
+        <td>
+          <img class="w-10" [src]="country.flagSvg" [alt]="country.name">
+        </td>
+        <td>{{country.name}}</td>
+        <td>{{country.capital}}</td>
+        <td>
+          <span class="badge badge-secondary bg-orange-900">
+            {{country.population | number}}
+          </span>
+        </td>
+        <td>
+          <a [routerLink]="['/country/by', country.cca2]" class="link-primary text-orange-800">Mas informacion</a>
+        </td>
+      </tr>
+      }
+
+      @if (errorMessage()) {
+      <tr>
+        <td colspan="8" class="text-center">
+          {{errorMessage()}}
+        </td>
+      </tr>
+      }
+
+      @if (countries().length == 0 && !isLoading()) {
+      <tr>
+        <td colspan="8" class="text-center">
+          No se encontraron resultados
+        </td>
+      </tr>
+      }
+
+      @if (isLoading()) {
+      <tr>
+        <td rowspan="4" colspan="8" class="text-center align-middle mt-3 h-70">
+          <span class="loading loading-spinner loading-xl text-orange-800"></span>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  </div>
+
+</section>
