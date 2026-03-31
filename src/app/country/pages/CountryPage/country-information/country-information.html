@@ -6,15 +6,13 @@
 
   <div class="card bg-base-300 rounded-box grid h-60 lg:h-120 grow place-items-center lg:text-xl">
     <h1 class="text-3xl mb-0">{{country().name}}</h1>
-    <h1 class="font-thin mt-3">Población {{country().population | number}}</h1>
-    <h1 class="font-thin mt-3">Región {{country().region}}</h1>
-    <h1 class="font-thin mt-3">Zona horaria {{country().timeZone}}</h1>
+    <h1 class="font-thin mt-3">Population {{country().population | number}}</h1>
+    <h1 class="font-thin mt-3">Region {{country().region}}</h1>
+    <h1 class="font-thin mt-3">Time zone {{country().timeZone}}</h1>
     <div class="flex mb-3">
-      <h1 class="font-thin mt-3">Código {{country().cca2}}</h1>
+      <h1 class="font-thin mt-3">Code {{country().cca2}}</h1>
       <button class="text-center font-thin mt-3 ml-5 underline cursor-pointer"
-        [routerLink]="['/country/map/', country().latlng.lat,country().latlng.lng]">Ver en Mapa</button>
+        [routerLink]="['/country/map/', country().latlng.lat,country().latlng.lng]">View on map</button>
     </div>
   </div>
-  <!-- <div class="divider lg:divider-horizontal">OR</div> -->
-
 </div>
