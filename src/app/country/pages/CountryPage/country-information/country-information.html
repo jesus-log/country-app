@@ -1,11 +1,11 @@
-<div class="flex w-full flex-col lg:flex-row lg:justify-center">
+<div class="flex w-full flex-col justify-center lg:flex-row ">
 
   <div class="card bg-base-300 rounded-box grid h-60 lg:h-120 grow place-items-center mb-0">
     <img class="w-40 lg:w-70" [src]="country().flagSvg" [alt]="country().name">
   </div>
 
   <div class="card bg-base-300 rounded-box grid h-60 lg:h-120 grow place-items-center lg:text-xl">
-    <h1 class="text-3xl mb-0">{{country().name}}</h1>
+    <h1 class="text-xl  md:text-3xl mb-0">{{country().name}}</h1>
     <h1 class="font-thin mt-3">Population {{country().population | number}}</h1>
     <h1 class="font-thin mt-3">Region {{country().region}}</h1>
     <h1 class="font-thin mt-3">Time zone {{country().timeZone}}</h1>

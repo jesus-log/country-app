@@ -11,7 +11,7 @@ export type Region =
   | 'Asia'
   | 'Europe'
   | 'Oceania'
-  | 'Antarctica';
+  | 'Antarctic';
 
 
   function validatequeryParam(queryParam:string):Region{
@@ -22,7 +22,7 @@ export type Region =
     asia:'Asia',
     europa:'Europe',
     oceania:'Oceania',
-    antarctica:'Antarctica',
+    antarctic:'Antarctic',
   }
   return validRegions[queryParam] ?? 'Africa'
   }
@@ -41,7 +41,7 @@ export class ByRegionPage {
     'Asia',
     'Europe',
     'Oceania',
-    'Antarctica',
+    'Antarctic',
   ];
   countryService = inject(CountryService);
   activatedRoute = inject(ActivatedRoute);
