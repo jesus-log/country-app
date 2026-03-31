@@ -2,8 +2,8 @@ import { Component, effect, inject, linkedSignal, signal } from '@angular/core';
 import { CountryList } from "../../components/country-list/country-list";
 import { CountryService } from '../../services/country-service';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 export type Region =
   | 'Africa'
@@ -11,7 +11,7 @@ export type Region =
   | 'Asia'
   | 'Europe'
   | 'Oceania'
-  | 'Antarctic';
+  | 'Antarctica';
 
 
   function validatequeryParam(queryParam:string):Region{
@@ -22,7 +22,7 @@ export type Region =
     asia:'Asia',
     europa:'Europe',
     oceania:'Oceania',
-    antarctic:'Antarctic',
+    antarctica:'Antarctica',
   }
   return validRegions[queryParam] ?? 'Africa'
   }
@@ -41,13 +41,13 @@ export class ByRegionPage {
     'Asia',
     'Europe',
     'Oceania',
-    'Antarctic',
+    'Antarctica',
   ];
   countryService = inject(CountryService);
   activatedRoute = inject(ActivatedRoute);
   queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? 'Africa';
-  router = inject(Router);
   regionSelected = linkedSignal<string>(() => validatequeryParam(this.queryParam));
+  requestError = signal<string | null>(null);
   //regionSelected = signal<Region>('Africa');
 
 /*    regionEffect = effect( ()=>{
@@ -59,13 +59,14 @@ export class ByRegionPage {
   countryResources = rxResource({
     params: () => ({ query: this.regionSelected() }),
     stream: ({params}) => {
-      this.router.navigate(['/country/by-region'], {
-        queryParams: {
-          query: params.query
-        }
-      })
       if (!params.query) return of([]);
-      return this.countryService.serchByRegion(params.query);
+      return this.countryService.serchByRegion(params.query).pipe(
+              catchError((error) => {
+                const message = error instanceof Error ? error.message : 'Unexpected error';
+                this.requestError.set(message);
+                return of([]);
+              })
+            );;
     }
   });
 

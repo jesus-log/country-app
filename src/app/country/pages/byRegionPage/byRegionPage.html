@@ -8,7 +8,7 @@
 
   <country-list
    [countries]="countryResources.value() ?? []"
-   [errorMessage]="countryResources.error()"
+   [errorMessage]="requestError()"
    [isEmpty]="countryResources.value()?.length == 0"
    [isLoading]="countryResources.isLoading()"
    />

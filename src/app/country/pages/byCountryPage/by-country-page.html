@@ -1,10 +1,10 @@
 <div class="px-4 py-4 w-full">
   <!-- country-search-input -->
-  <country-search-input placeholder="Buscar por capital" (value)="query.set($event)" [debounceTime]="500" [initialValue]="query()"></country-search-input>
+  <country-search-input placeholder="Search by country" (value)="query.set($event)" [debounceTime]="500" [initialValue]="query()"></country-search-input>
   <!-- country-list -->
   <country-list
    [countries]="countryResources.value() ?? []"
-   [errorMessage]="countryResources.error()"
+   [errorMessage]="requestError()"
    [isEmpty]="countryResources.value()?.length == 0"
    [isLoading]="countryResources.isLoading()"
    />

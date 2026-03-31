@@ -8,18 +8,18 @@
     </div>
     }
 
-    @if (errorMessage()) {
+    @if (!isLoading() && normalizedError()) {
     <div class="card bg-base-200">
       <div class="card-body text-center">
-        {{errorMessage()}}
+        {{normalizedError()}}
       </div>
     </div>
     }
 
-    @if (countries().length == 0 && !isLoading()) {
+    @if (countries().length == 0 && !isLoading() && !normalizedError()) {
     <div class="card bg-base-200">
       <div class="card-body text-center">
-        No se encontraron resultados
+        No results found
       </div>
     </div>
     }
@@ -47,7 +47,7 @@
         </div>
 
         <a [routerLink]="['/country/by', country.cca2]" class="link-primary text-orange-800">
-          Mas informacion
+          More information
         </a>
       </div>
     </article>
@@ -58,11 +58,11 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Icono</th>
-        <th>Bandera</th>
-        <th>Nombre</th>
+        <th>Icon</th>
+        <th>Flag</th>
+        <th>Name</th>
         <th>Capital</th>
-        <th>Poblacion</th>
+        <th>Population</th>
         <th></th>
       </tr>
     </thead>
@@ -82,23 +82,23 @@
           </span>
         </td>
         <td>
-          <a [routerLink]="['/country/by', country.cca2]" class="link-primary text-orange-800">Mas informacion</a>
+          <a [routerLink]="['/country/by', country.cca2]" class="link-primary text-orange-800">More information</a>
         </td>
       </tr>
       }
 
-      @if (errorMessage()) {
+      @if (!isLoading() && normalizedError()) {
       <tr>
         <td colspan="8" class="text-center">
-          {{errorMessage()}}
+          {{normalizedError()}}
         </td>
       </tr>
       }
 
-      @if (countries().length == 0 && !isLoading()) {
+      @if (countries().length == 0 && !isLoading() && !normalizedError()) {
       <tr>
         <td colspan="8" class="text-center">
-          No se encontraron resultados
+          No results found
         </td>
       </tr>
       }

@@ -4,8 +4,8 @@ import { CountryList } from "../../components/country-list/country-list";
 import { CountryService } from '../../services/country-service';
 import { Country } from '../../interfaces/county.interface';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-by-capital-search',
@@ -18,20 +18,22 @@ export class ByCapitalSearch {
 
   activatedRoute = inject(ActivatedRoute);
   queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
-  router = inject(Router);
   query = linkedSignal<string>(() => this.queryParam);
+  requestError = signal<string | null>(null);
 
   //Con RxResource --> observable
   countryResources = rxResource({
     params: () => ({ query: this.query() }),
     stream: ({ params }) => {
-      this.router.navigate(['/country/by-capital'], {
-        queryParams: {
-          query: params.query
-        }
-      })
+      this.requestError.set(null);
       if (!params.query) return of([]);
-      return this.countryService.searchByCapital(params.query);
+      return this.countryService.searchByCapital(params.query).pipe(
+        catchError((error) => {
+          const message = error instanceof Error ? error.message : 'Unexpected error';
+          this.requestError.set(message);
+          return of([]);
+        })
+      );
     }
   });
 
